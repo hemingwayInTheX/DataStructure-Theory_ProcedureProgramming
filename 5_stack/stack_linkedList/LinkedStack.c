@@ -22,7 +22,7 @@ int isFull(Stack* S) {
 int isEmpty(Stack* S) {
 
 	// Fill your code
-	return S->top == NULL;
+	return S->top == NULL;//TOP이 가리키는게 없다면 리스트는 공백상태
 
 }
 
@@ -33,8 +33,8 @@ void push(Stack* S, element x) {
 	stackNode* newNode = (stackNode*)malloc(sizeof(stackNode));//1. make newNode
 	newNode->data = x;//2. fill data in newNode's dataField
 
-	newNode->link = S->top;
-	S->top = newNode;
+	newNode->link = S->top;//새노드의 링크필드에 기존 첫노드의 주소값을 대입해 연결
+	S->top = newNode;//TOP이 새노드를 가리키도록
 
 }
 
@@ -42,17 +42,17 @@ void push(Stack* S, element x) {
 element pop(Stack* S) {
 
 	// Fill your code
-	stackNode* temp;//삭제하고자 하는 노드의 주소값을 저장하는 포인터 변수
+	stackNode* temp;//POP하고자 하는 노드의 주소값을 저장하는 포인터 변수
 	element e;
-	if (isEmpty(S)) {
+	if (isEmpty(S)) {//리스트가 공백이면 검사제외
 		printf("[ERROR] Stack is EMPTY!!\n");
 		return ERROR;
 	}
 
 	else {
-		temp = S->top;
-		e = temp->data;
-		S->top = temp->link;
+		temp = S->top;//POP할려는 노드의 주소값을 TEMP에 저장
+		e = temp->data;//POP하는 노드의 데이터값을 반환변수에 저장
+		S->top = temp->link;//TOP이 POP노드 다음노드를 가리키도록
 		free(temp);
 	}
 	return e;
@@ -83,12 +83,7 @@ void displayStack(Stack* S) {
 	printf(" ]\n");
 }
 
-// 스택 비우기, empty stack
+ //스택 비우기, empty stack
 void clear(Stack* S) {
-	
-	// Fill your code
-
-
-}				
-
-
+	S->top = NULL;//TOP이 가리키는게 없게 하면 리스트 내부노드들과의 연결 끊어져 초기화
+ }
