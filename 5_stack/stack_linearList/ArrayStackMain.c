@@ -23,8 +23,8 @@ int main() {
 	printf("\n(3) 현재 top의 요소를 출력\n");	// (3) Display elements of the current top
 
 	// Fill your code	// Elements stored in top: 
-	element topElement = peek(S);
-	printf("top에 저장된 요소 : %d\n", topElement);
+	item = peek(S);
+	printf("top에 저장된 요소 : %d\n", item);
 
 	printf("\n(4) 스택에서 요소 삭제\n");	// (4) Deleting an element from the stack
 	
@@ -50,7 +50,7 @@ int main() {
 	printf("\n(7) 스택에 1부터 10까지 자연수를 차례로 삽입\n");	// (7) Insert natural numbers from 1 to 10 into the stack in oerder
 	
 	// Fill your code
-	for (int i = 0; i < 11; i++){
+	for ( i = 0; i < 11; i++){
 		push(S, i);
 	}
 	displayStack(S);
@@ -61,5 +61,6 @@ int main() {
 	clear(S);
 	displayStack(S);
 
+	free(S);//동적메모리 해제
 	return 0;
 }

@@ -83,7 +83,7 @@ void displayStack(Stack* S) {
 void clear(Stack* S) {
 	
 	// Fill your code
-	while()
+	S->top = -1;//top이 -1을 가리키도록 하면 array내부의 모든 요소들이 초기화
 
 }				
 
