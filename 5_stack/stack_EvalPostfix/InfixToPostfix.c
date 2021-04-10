@@ -120,28 +120,28 @@ float evalPostfix(Stack* S, char* exp) {
 	precedence token = getToken(symbol);
 	
 	// Fill your code
-	int calcRet = 0;
+	int inputStackData = 0;
 
 	while (exp[n] != '\0') {
-		if (token == 8) {
-			push(S, symbol);
+		if (token == 8) {// 1. 피연산자일 경우 스택에 push
+			inputStackData = symbol - '0';
+			push(S, inputStackData);
 		}
-		else {
-			op1 = (pop(S) - 48);
-			op2 = (pop(S) - 48);
+		else {// 2. 연산자일 경우 필요한만큼 피연산자 pop,  조건에 맞는 연산 수행 후 다시 push
+			op1 = pop(S);
+			op2 = pop(S) ;
 			
 			switch (token){
-			case 2:calcRet = op1 + op2; push(S, (calcRet + 48)); break;
-			case 3:calcRet = op1 - op2; push(S, (calcRet + 48)); break;
-			case 4:calcRet = op1 * op2; push(S, (calcRet + 48)); break;
-			case 5:calcRet = op1 / op2; push(S, (calcRet + 48)); break;
-			case 6:calcRet = op1 % op2; push(S, (calcRet + 48)); break;
+			case 2:push(S , op1 + op2); break;
+			case 3:push(S, op1 - op2); break;
+			case 4:push(S, op1 * op2); break;
+			case 5:push(S, op1 / op2); break;
+			case 6:push(S, op1 % op2); break;
 			default:break;
 			}
 		}
 		symbol = exp[++n];//갱신 작업 == LOOP 한 바퀴 끝내기 전, 포인터 배열의 다음 요소값 검사 위해
 		token = getToken(symbol);//우선순위 대소비교 위한 precedence타입으로 casting
 	}
-	calcRet = (pop(S)-48);
-	return calcRet;
+	return pop(S);
 }
