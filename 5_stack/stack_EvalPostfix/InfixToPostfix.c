@@ -45,7 +45,7 @@ int prec(precedence symbol) {
 		case lparen:
 		case rparen:	return 0;
 		case plus:
-		case minus:		return 1;
+		case minus:	return 1;
 		case multiply:
 		case divide:
 		case mod:		return 2;
@@ -78,8 +78,11 @@ char* toPostfix(Stack* S, char* exp) {
 				if (token > compareToken) {//2-b-ㄱ. 수식(연산자)  >  스택(연산자) = push
 					push(S, symbol);
 				}
-				else if (token < compareToken) {//2-b-ㄴ.  수식(연산자)  <  스택(연산자) = pop&print
-					 if (token == 1) {// ' ) ' 만나면 스택에서 연산자 pop -->  ' ( ' 만나면 버리고 pop한 연산자 print
+				else if (token <= compareToken) {//2-b-ㄴ.  수식(연산자)  <  스택(연산자) = pop&print
+					if (token == 0) {
+						push(S, symbol);
+					}
+					else if (token == 1) {// ' ) ' 만나면 스택에서 연산자 pop -->  ' ( ' 만나면 버리고 pop한 연산자 print
 						 while (1) {//MAKE LOOP
 							 element ignoreData = pop(S);//  pop한 요소 저장
 							 if (ignoreData == '(') {// ' ( ' 만나면 무시하고 ESCAPE LOOP
@@ -91,7 +94,7 @@ char* toPostfix(Stack* S, char* exp) {
 						}
 					}
 					 else {// 괄호 조건 없을 경우 pop한 요소 출력 후 push
-						 result[n] = pop(S);
+						 result[len++] = pop(S);
 						 push(S, symbol);
 					 }
 				}
@@ -106,7 +109,6 @@ char* toPostfix(Stack* S, char* exp) {
 			result[i] = pop(S);
 		}
 	}
-
 	return result;
 }
 
@@ -118,6 +120,28 @@ float evalPostfix(Stack* S, char* exp) {
 	precedence token = getToken(symbol);
 	
 	// Fill your code
+	int calcRet = 0;
 
-
+	while (exp[n] != '\0') {
+		if (token == 8) {
+			push(S, symbol);
+		}
+		else {
+			op1 = (pop(S) - 48);
+			op2 = (pop(S) - 48);
+			
+			switch (token){
+			case 2:calcRet = op1 + op2; push(S, (calcRet + 48)); break;
+			case 3:calcRet = op1 - op2; push(S, (calcRet + 48)); break;
+			case 4:calcRet = op1 * op2; push(S, (calcRet + 48)); break;
+			case 5:calcRet = op1 / op2; push(S, (calcRet + 48)); break;
+			case 6:calcRet = op1 % op2; push(S, (calcRet + 48)); break;
+			default:break;
+			}
+		}
+		symbol = exp[++n];//갱신 작업 == LOOP 한 바퀴 끝내기 전, 포인터 배열의 다음 요소값 검사 위해
+		token = getToken(symbol);//우선순위 대소비교 위한 precedence타입으로 casting
+	}
+	calcRet = (pop(S)-48);
+	return calcRet;
 }
