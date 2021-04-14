@@ -28,6 +28,6 @@ listNode* search(linkedList* L, element x);				// 검색, search
 int getLength(linkedList* L);							// 리스트에 저장되어 있는 데이터의 수 반환, return the number of data stored in the list 
 void displayList(linkedList* L);						// 리스트의 모든 요소 출력, display all elements in the list
 void clear(linkedList* L);								// 리스트의 전체 메모리 해제, release full memory of the list
-
+void swapNode(linkedList* L, listNode* M);//리스트 위치 변환
 #endif
 

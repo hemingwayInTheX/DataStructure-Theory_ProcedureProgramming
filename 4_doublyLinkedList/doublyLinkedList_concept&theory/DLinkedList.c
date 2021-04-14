@@ -117,6 +117,26 @@ void displayList(linkedList* L) {
 	printf(")\n");
 }
 
+void swapNode(linkedList* L, listNode* M) {
+	/*P,Q,R 각각 다른 노드를 가리킨다고 가정 --> P = M의 이전노드  Q = M의 다음노드  R = 두번째 노드
+	   이를 활용해 별도의 변수선언 없이 SWAP기능 구현*/
+	listNode* p = M->llink;
+	listNode* q = M->rlink;
+	listNode* r = L->head->rlink;
+
+	L->head = M;// A)  55노드의 주소를 헤드가 가리키도록
+	M->llink = NULL;//  55노드의 왼쪽 링크필드를 NULL값으로
+	M->rlink = r;//         55노드가 10노드 다음노드를 가리키도록
+
+	r->llink->llink = p;//  B)  10노드의 왼쪽 링크가 55노드 이전노드를 가리키도록
+	p->rlink = r->llink;//        55노드 이전노드가 10노드를 가리키도록
+	
+	r->llink->rlink = q;//   C)  10노드가 55노드 다음노드를 가리키도록
+	q->llink = r->llink;//          55노드 다음노드가 10노드를 가리키도록
+
+	r->llink = M;//            D)   10노드 다음노드가 바뀐 첫노드를 가리키도록
+}
+
 void clear(linkedList* L) {
 	listNode* p;
 	while (L->head != NULL) {

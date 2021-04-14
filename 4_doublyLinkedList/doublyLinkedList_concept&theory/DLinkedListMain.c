@@ -26,8 +26,14 @@ int main() {
 	insert(L, p, 80);
 	displayList(L);
 	printf("리스트에 저장된 데이터 개수: %d\n", getLength(L));	// Number of data stored in the list
+	
+	printf("\n(5)리스트의 50 노드 뒤에 55 노드를 삽입하기\n");	// (4)Insert 80 node after 50 node in the list
+	p = search(L, 50);
+	insert(L, p, 55);
+	displayList(L);
+	printf("리스트에 저장된 데이터 개수: %d\n", getLength(L));	// Number of data stored in the list
 
-	printf("\n(5)80 노드를 검색하고 삭제하기\n");	// (5)Search for and delete 80 node
+	printf("\n(6)80 노드를 검색하고 삭제하기\n");	// (5)Search for and delete 80 node
 	p = search(L, 80);
 	if (p == NULL)
 		printf("찾는 데이터가 없습니다.\n");	// No data
@@ -40,13 +46,23 @@ int main() {
 	displayList(L);
 	printf("리스트에 저장된 데이터 개수: %d\n", getLength(L));	// Number of data stored in the lis
 
-	printf("\n(6)10 노드 뒤에 30 노드 삽입하기\n");	// (6)Inserting 30 node after 10 node
+	printf("\n(7)10 노드 뒤에 30 노드 삽입하기\n");	// (6)Inserting 30 node after 10 node
 	p = search(L, 10);
 	insert(L, p, 30);
 	displayList(L);
 	printf("리스트에 저장된 데이터 개수: %d\n", getLength(L));	// Number of data stored in the list
+	
+	printf("\n(8)리스트의 95 노드를 마지막 노드로 삽입하기\n");	// (3)Inserting 50 node into the list as the last node
+	insertLast(L, 95);
+	displayList(L);
+	printf("리스트에 저장된 데이터 개수: %d\n", getLength(L));	// Number of data stored in the list
 
-	printf("\n(7)5 노드를 검색하고 삭제하기\n");	// (7)To search for and delete 5 node
+	printf("\n(9)첫노드와 55노드 위치 바꾸기\n");
+	p = search(L, 55);
+	swapNode(L, p);
+	displayList(L);
+
+	printf("\n(10)5 노드를 검색하고 삭제하기\n");	// (7)To search for and delete 5 node
 	p = search(L, 5);
 	if (p == NULL)
 		printf("찾는 데이터가 없습니다.\n");	// No data
