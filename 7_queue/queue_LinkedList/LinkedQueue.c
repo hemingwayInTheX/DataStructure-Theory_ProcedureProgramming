@@ -13,43 +13,61 @@ Queue* create() {
 // 큐가 포화상태인지 확인하는 연산				
 int isFull(Queue* Q) {
 	// Fill your code
-
+	return 0;
 }
 
 // 큐가 공백상태인지 확인하는 연산			
 int isEmpty(Queue* Q) {
 	// Fill your code
-
+	return Q->front == NULL;
 }	
 
 // 큐의 rear에 요소를 추가하는 연산		
 void enqueue(Queue* Q, element x) {
 	// Fill your code
+	queueNode* newNode = (queueNode*)malloc(sizeof(queueNode));//노드 생성
+	newNode->data = x;//데이터 값 할당
+	newNode->link = NULL;//링크필드 널값으로 --> 연결 리스트의 특징
 
-
-
-
-
+	if (isEmpty(Q)) {//공백일 경우 front,rear가 새노드 가리키도록
+		Q->front = newNode;
+	}
+	else {
+		Q->rear->link = newNode;//새노드 추가될 때마다 rear 가 가리키는 노드의 주소값 갱신
+	}
+	Q->rear = newNode;
 }	
 
 // 큐에서 가장 먼저 저장된 요소 삭제 및 반환하는 연산
 element dequeue(Queue* Q) {
 	// Fill your code
+	queueNode* temp;
+	element e;
 
-
-
-
-
+	if (isEmpty(Q)) {
+		printf("[ERROR] Queue is EMPTY!!\n");
+		return ERROR;
+	}
+	else {
+		temp = Q->front;
+		e = temp->data;
+		Q->front = temp->link;
+		free(temp);
+		/*	if (Q->front == NULL) {
+				Q->rear = NULL;
+			}*/
+		return e;
+	}
 }
 
 // 큐에서 가장 먼저 저장된 요소를 반환하는 연산	
 element peek(Queue* Q) {
 	// Fill your code
-
-
-
-
-
+	if (isEmpty(Q)) {
+		printf("[ERROR] Queue is EMPTY!!\n");
+		return ERROR;
+	}
+	return Q->front->data;
 }	
 
 // 큐의 모든 요소 출력	
