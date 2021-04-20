@@ -33,8 +33,10 @@ int main(){
 	printf("\n(3)리스트에 마지막에 80 노드를 추가하기\n");
 
 	// Fill your code
-	insertLast(L, 80);
-
+	//insertLast(L, 80); //이전노드 정보 모름 --> 시간복잡도 O(N)
+	p = search(L, 50);//이전노드 정보 제공해 마지막 노드 삽입 --> 시간복잡도 - O(1)
+	insert(L, p, 80);
+	displayList(L);
 	displayList(L);
 	length = getLength(L);
 	printf("리스트에 저장된 데이터 개수 : %d\n", length);
