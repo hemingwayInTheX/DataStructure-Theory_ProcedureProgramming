@@ -72,39 +72,44 @@ element peek(Stack* S) {
 
 
 void mergeSortedStacks(Stack* A, Stack* B) {
-	Stack* C = create();
-	Stack* D = create();
+	Stack* C = create();/*A,B 요소 비교해 작은 요소부터 PUSH한 임시 스택*/
+	Stack* D = create();/*C의 TOP요소를 차례대로 PUSH한 TOP이 최소값을 가지는 결과 스택 */
 
-	element itemA = 0;
-	element itemB = 0;
-	element popA = 0;
-	element popB = 0;
-	element itemC = 0;
+	element itemA = 0;/*A스택 TOP이 가리키는 원소*/
+	element itemB = 0;/*B스택 TOP이 가리키는 원소*/
+	element itemC = 0;/*C스택 TOP이 가리키는 원소*/
 	
-	while (!isEmpty(A) && !isEmpty(B)) {
+	/* 1) 스택 A, 스택 B TOP 비교, 작은 요소 스택C 에 저장*/
+	while (1) {
 		itemA = peek(A);
 		itemB = peek(B);
 
-		if (itemA > itemB) {
-			popB = pop(B);
-			push(C,popB);
-			itemB = peek(B);
+		if (itemA > itemB) {/*A가 B보다 크면 B스택 POP하고 C로 PUSH*/
+			itemB = pop(B);
+			push(C,itemB);
+			if (isEmpty(B)) {break;}/*공백이면 ESCAPE LOOP*/
+			itemB = peek(B);/*POP연산 이후 다음 비교대상 갱신위해 PEEK*/
 		}
-		else if (itemA < itemB) {
-			popA = pop(A);
-			push(C, popA);
-			itemA = peek(A);
+		else if (itemA < itemB) {/*B가 A보다 크면 A스택 POP하고 C로 PUSH*/
+			itemA = pop(A);
+			push(C, itemA);
+			if (isEmpty(A)) {break;}/*공백이면 ESCAPE LOOP*/
+			itemA = peek(A);/*POP연산 이후 다음 비교대상 갱신위해 PEEK*/
 		}
-	}
+	}/*LOOP1*/
+	
+	 /* 2) 가장 큰 요소가 스택 A에 남아있으면 C로 PUSH*/
 	if (!isEmpty(A)) {
 		element a = pop(A);
 		push(C, a);
 	}
+	/* 3) 가장 큰 요소가 스택 B에 남아있으면 C로 PUSH*/
 	else if (!isEmpty(B)) {
 		element b = pop(B);
 		push(C, b);
 	}
 
+	/* 4) 스택 C의 TOP요소를 스택D에 차례대로 PUSH*/
 	while (!isEmpty(C)) {
 		itemC = pop(C);
 		push(D, itemC);
