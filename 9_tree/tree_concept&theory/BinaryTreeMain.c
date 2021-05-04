@@ -41,25 +41,25 @@ int main() {
 	printf("root의 오른쪽 자식의 왼쪽 자식: %d\n", getData(getLSubtree(getRSubtree(root))));	// left child of right child of root: %d
 	printf("root의 오른쪽 자식의 오른쪽 자식: %d\n", getData(getRSubtree(getRSubtree(root))));	// right child of right child of root: %d
 	
-	//// #2 중위 순회, #2 InorderTraverse
-	//printf("\n=== (2) 중위 순회 ===\n");	// === (2) Inorder Traverse ===
-	//InorderTraverse(root, showData);
-	//printf("\n");
-	//
-	//// #3 PreorderTraverse
-	//printf("\n=== (3) 전위 순회 ===\n");	// === (3) Preorder Traverse ===
-	//PreorderTraverse(root, showData);
-	//printf("\n");
-	//
-	//// #4 PostorderTraverse
-	//printf("\n=== (4) 후위 순회 ===\n");	// === (4) Postorder Traverse ===
-	//PostorderTraverse(root, showData);
-	//printf("\n");
-	//
-	//// #5 deleteTree
-	//printf("\n=== (5) tree 소멸 ===\n");	// === (5) Delete Tree ===	
-	//deleteBT(root);
-	//printf("\n");
+	// #2 InorderTraverse
+	printf("\n=== (2) 중위 순회 ===\n");	// === (2) Inorder Traverse ===
+	InorderTraverse(root, showData);
+	printf("\n");
+	
+	// #3 PreorderTraverse
+	printf("\n=== (3) 전위 순회 ===\n");	// === (3) Preorder Traverse ===
+	PreorderTraverse(root, showData);
+	printf("\n");
+	
+	// #4 PostorderTraverse
+	printf("\n=== (4) 후위 순회 ===\n");	// === (4) Postorder Traverse ===
+	PostorderTraverse(root, showData);
+	printf("\n");
+	
+	// #5 deleteTree
+	printf("\n=== (5) tree 소멸 ===\n");	// === (5) Delete Tree ===	
+	deleteBT(root);
+	printf("\n");
 	
 	return 0;	
 }

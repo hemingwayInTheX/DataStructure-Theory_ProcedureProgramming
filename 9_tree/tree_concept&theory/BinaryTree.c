@@ -32,31 +32,14 @@ BinTree* makeBT(BinTree* bt1, BTData x, BinTree* bt2) {
 void makeLSubtree(BinTree* bt1, BinTree* bt2) {
 
 	// Fill your code
-	//BinTree* temp;
-	//BinTree* rtree = (BinTree*)malloc(sizeof(BinTree));
-
-	//if (isBTEmpty(bt1)) {//공백이면
-		bt1->left = bt2;//최상위 root의 왼쪽에 bt1연결
-	//}
-	//else {
-		//temp = makeBT(bt2, bt1->data, rtree);
-		//makeLSubtree(temp, bt2);
-	//}
+	bt1->left = bt2;//최상위 root의 왼쪽에 bt1연결
 }
 
 // bt2를 bt1의 오른쪽 서브트리로 연결, connect bt2 to the right subtree of bt1
 void makeRSubtree(BinTree* bt1, BinTree* bt2) {
 
 	// Fill your code
-	//BinTree* temp;
-	///BinTree* ltree = (BinTree*)malloc(sizeof(BinTree));
-	//if (isBTEmpty(bt1)) {//공백이면
-		bt1->right = bt2;// 최상위 root의 오른쪽에 bt2연결
-	//}
-	//else {
-		//temp = makeBT(bt2, bt1->data, ltree);
-		//makeLSubtree(temp, bt2);
-	//}
+	bt1->right = bt2;// 최상위 root의 오른쪽에 bt2연결
 }
 
 // bt의 왼쪽 서브트리를 반환, returns the left subtree of bt
@@ -106,26 +89,32 @@ void deleteBT(BinTree* bt) {
 void InorderTraverse(BinTree* bt, visitFuncPtr action) {
 
 	// Fill your code
-	
-
-
+	if (bt != NULL) {
+		InorderTraverse(bt->left, action);
+		action(bt->data);
+		InorderTraverse(bt->right, action);
+	}
 }
 
 // 전위 순회, preorder
 void PreorderTraverse(BinTree* bt, visitFuncPtr action) {
 
 	// Fill your code
-	
-
-
+	if (bt != NULL) {
+		action(bt->data);
+		PreorderTraverse(bt->left, action);
+		PreorderTraverse(bt->right, action);
+	}
 }
 
 // 후위 순회, postorder
 void PostorderTraverse(BinTree* bt, visitFuncPtr action) {
 
 	// Fill your code
-	
-
-
+	if (bt != NULL) {
+		PostorderTraverse(bt->left, action);
+		PostorderTraverse(bt->right, action);
+		action(bt->data);
+	}
 }
 
