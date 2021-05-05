@@ -27,14 +27,31 @@ BinTree* createExpTree(char exp[]) {
 	return pop(S);//4) 수식의 끝 만나면 tree 반환
 }
 
-//int evalExpTree(BinTree* bt) {
-//	int op1, op2;
-//	
-//	// Fill your code
-//	
-//	
-//
-//}
+int evalExpTree(BinTree* bt) {
+	int op1, op2;
+	
+	// Fill your code
+	if (getLSubtree(bt) == NULL && getRSubtree(bt) == NULL) {
+		return getData(bt);
+	}
+	op1 = evalExpTree(getLSubtree(bt));
+	op2 = evalExpTree(getRSubtree(bt));
+
+	switch (getData(bt))
+	{
+	case '+':
+		return op1 + op2;
+	case '-':
+		return op1 - op2;
+	case '*':
+		return op1 * op2;
+	case '/':
+		return op1 / op2;
+	default:
+		break;
+	}
+	return 0;
+}
 
 void showNodeData(int x) {
 	if(0<=x && x<=9)			// 피연산자 출력, operand output
