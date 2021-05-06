@@ -26,7 +26,7 @@ void deleteBT(BinTree* bt);	// bt가 가리키는 노드를 루트로 하는 트리 전부 소멸, 
 
 typedef void visitFuncPtr(BTData x);						// 노드 방문시 action 정의, define action on node visit
 void InorderTraverse(BinTree* bt, visitFuncPtr action);		// 중위 순회, inorder 
-void PreorderTbraverse(BinTree* bt, visitFuncPtr action);	// 전위 순회, preorder 
+void PreorderTraverse(BinTree* bt, visitFuncPtr action);	// 전위 순회, preorder 
 void PostorderTraverse(BinTree* bt, visitFuncPtr action);	// 후위 순회, postorder 
 
 #endif
