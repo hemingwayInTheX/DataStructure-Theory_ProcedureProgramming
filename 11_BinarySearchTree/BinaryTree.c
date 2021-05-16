@@ -3,7 +3,7 @@
 #include "BinaryTree.h"
 
 // 공백 이진 트리 생성 연산, empty binary tree generation operations
-BinTree* createBT() {//생성 및 초기화
+BinTree* createBT(){//생성 및 초기화
 	BinTree* bt = (BinTree*)malloc(sizeof(BinTree));//메모리에 자료구조 생성
 	bt->key = EMPTY;//필드 초기화
 	bt->left = NULL;
@@ -13,7 +13,7 @@ BinTree* createBT() {//생성 및 초기화
 
 // 이진 트리가 비어있는지 검사하는 연산, operations to check if the binary tree is empty
 int isBTEmpty(BinTree* bt) {//모든 필드가 비어있으면 1반환
-	if (bt->left == NULL && bt->right == NULL && bt->key == EMPTY)
+	if(bt->left == NULL && bt->right == NULL && bt->key == EMPTY)
 		return TRUE;
 	else
 		return FALSE;
@@ -73,12 +73,12 @@ BTData getData(BinTree* bt) {
 
 // bt가 가리키는 노드를 루트로 하는 트리 전부 소멸, destroy all trees rooted at nodes bt points to
 void deleteBT(BinTree* bt) {
-	if (bt == NULL)
+	if(bt == NULL)
 		return;
-
+	
 	deleteBT(bt->left);
 	deleteBT(bt->right);
-
+	
 	printf("delete tree data: %d \n", bt->key);
 	free(bt);
 }
@@ -98,27 +98,27 @@ void InorderTraverse(BinTree* bt, visitFuncPtr action) {
 // 데이터 x가 저장된 노드 탐색, searching nodes where data x is stored
 BinTree* searchBST(BinTree* bt, BTData x) {
 	BinTree* p = bt;
-
+	
 	// Fill your code
 	/* ===탐색  조건===
 	 ㄱ)  탐색의 시작은 ROOT부터
 	 ㄴ) Target < Root = 왼쪽 서브트리 이동
-		   Target > Root = 오른쪽 서브트리 이동
+	       Target > Root = 오른쪽 서브트리 이동
 	 ㄷ) 재귀적 방법 & 반복적 방법*/
-
+	
 	if (p == NULL)return NULL;//key value가 자료구조에 없으면 null 반환
 	if (x == p->key)return p;//key value와 target value 일치하면 해당 노드 주소 반환 
 	if (x < p->key) return searchBST(p->left, x);// key value < target value --> 왼쪽 서브트리 이동
 	else return searchBST(p->right, x);// key value < target value --> 오른쪽 서브트리 이동
-
+	
 	return NULL;
 }
 
 // 데이터 x 저장, insert data x
 void insertBST(BinTree* bt, BTData x) {
 	BinTree* p = bt;
-	BinTree* parent = NULL;
-
+	BinTree* parent = NULL;	
+	
 	// 삽입할 노드 탐색, searching nodes to insert
 	// Fill your code
 	/*===BST 삽입연산 ===
@@ -152,7 +152,6 @@ void insertBST(BinTree* bt, BTData x) {
 
 // 데이터 x 노드 삭제, delete data x node
 void deleteBST(BinTree* bt, BTData x) {
-
 	// Fill your code
 	BinTree* dnode = bt;//삭제노드 
 	BinTree* pnode = NULL;//삭제노드의 부모노드
@@ -160,8 +159,10 @@ void deleteBST(BinTree* bt, BTData x) {
 
 	/*루프를 통해 삭제노드와 삭제노드의 부모노드 정보를 파악*/
 	while (dnode != NULL) {
-		if (x == dnode->key)break;
-		pnode = dnode;
+		if (x == dnode->key) {
+			break;
+		}
+		pnode = dnode; 
 		if (x < dnode->key)dnode = dnode->left;
 		else dnode = dnode->right;
 	}
@@ -198,9 +199,22 @@ void deleteBST(BinTree* bt, BTData x) {
 	// CASE 3: 삭제할 노드의 차수가 2인 경우, CASE 3: if the node to be deleted has a degree of 2
 	// Fill your code
 	else if (dnode->left != NULL && dnode->right != NULL) {
-		/*왼쪽 서브트리에서 후계자 탐색*/
-		BinTree* replaceNode = getLSubtree(dnode);
+		/*오른쪽 서브트리에서 후계자 탐색*/
+		BinTree* rnode = getRSubtree(dnode);//후계자 노드
+		BinTree* rpnode = dnode;//후계자 노드의 부모 노드
+		
+		while (getLSubtree(rnode) != NULL) {//오른쪽 서브트리로 탐색 할 경우, 가장 작은 값으로 대체해야됨 --> 왼쪽으로 이동
+			rpnode = rnode;
+			rnode = getLSubtree(rnode);
+		}
+		setData(dnode, getData(rnode));//삭제 자리에 탐색 성공한 가장 작은 값을 대입
 
-
+		if (getLSubtree(rpnode) == rnode) {
+			makeLSubtree(rpnode, getRSubtree(rnode));
+		}
+		else
+			makeRSubtree(rpnode, getRSubtree(rnode));
 	}
 
+
+}
