@@ -155,14 +155,14 @@ void deleteBST(BinTree* bt, BTData x) {
 	// Fill your code
 	BinTree* dnode = bt;//삭제노드 
 	BinTree* pnode = NULL;//삭제노드의 부모노드
-	BinTree* cnode = NULL;//삭제노드의 자식노드
+	//BinTree* cnode = NULL;//삭제노드의 자식노드
 
 	/*루프를 통해 삭제노드와 삭제노드의 부모노드 정보를 파악*/
 	while (dnode != NULL) {
 		if (x == dnode->key) {
 			break;
 		}
-		pnode = dnode; 
+		pnode = dnode;
 		if (x < dnode->key)dnode = dnode->left;
 		else dnode = dnode->right;
 	}
@@ -185,15 +185,27 @@ void deleteBST(BinTree* bt, BTData x) {
 	// Fill your code
 	else if (dnode->left == NULL || dnode->right == NULL) {
 		/*(1) 삭제노드의 서브트리 위치 파악*/
-		if (getLSubtree(dnode) != NULL)//삭제노드의 자식노드가 왼쪽 서브트리일 경우
-			cnode = getLSubtree(dnode);
-		else//오른쪽 서브트리일 경우
-			cnode = getRSubtree(dnode);
-		/*(2) 부모노드를 통해 삭제노드의 위치 파악*/
-		if (getLSubtree(pnode) == dnode)
-			pnode->left = cnode;
-		else
-			pnode->right = cnode;
+		if (dnode->left != NULL) {//삭제노드의 자식이 왼쪽에 있으면
+			if (pnode->left == dnode)//삭제노드가 삭제노드의 부모노드의 왼쪽에 있으면
+				pnode->left = dnode->left;//부모노드의 왼쪽으로 자식노드를 연결
+			else
+				pnode->right = dnode->left;
+		}
+		else {//삭제노드의 자식이 오른쪽에 있으면
+			if (pnode->left == dnode)
+				pnode->left = dnode->right;
+			else
+				pnode->right = dnode->right;
+		}
+		//if (getLSubtree(dnode) != NULL)//삭제노드의 자식노드가 왼쪽 서브트리일 경우
+		//	cnode = getLSubtree(dnode);
+		//else//오른쪽 서브트리일 경우
+		//	cnode = getRSubtree(dnode);
+		///*(2) 부모노드를 통해 삭제노드의 위치 파악*/
+		//if (getLSubtree(pnode) == dnode)
+		//	pnode->left = cnode;
+		//else
+		//	pnode->right = cnode;
 	}
 
 	// CASE 3: 삭제할 노드의 차수가 2인 경우, CASE 3: if the node to be deleted has a degree of 2
@@ -202,19 +214,23 @@ void deleteBST(BinTree* bt, BTData x) {
 		/*오른쪽 서브트리에서 후계자 탐색*/
 		BinTree* rnode = getRSubtree(dnode);//후계자 노드
 		BinTree* rpnode = dnode;//후계자 노드의 부모 노드
-		
+		/*STEP1)*/
 		while (getLSubtree(rnode) != NULL) {//오른쪽 서브트리로 탐색 할 경우, 가장 작은 값으로 대체해야됨 --> 왼쪽으로 이동
 			rpnode = rnode;
 			rnode = getLSubtree(rnode);
 		}
+		/*STEP2)*/
 		setData(dnode, getData(rnode));//삭제 자리에 탐색 성공한 가장 작은 값을 대입
-
-		if (getLSubtree(rpnode) == rnode) {
+		/*STEP3)*/
+		/*if (getRSubtree(rpnode) != NULL) {	
+			deleteBST(getRSubtree(rpnode), rnode->key);
+		}*///재귀호출(method1)
+		
+		/*(method2)*/
+		if (getLSubtree(rpnode) == rnode) {//기존의 후계자 노드 삭제 
 			makeLSubtree(rpnode, getRSubtree(rnode));
 		}
 		else
 			makeRSubtree(rpnode, getRSubtree(rnode));
-	}
-
-
+		}
 }
