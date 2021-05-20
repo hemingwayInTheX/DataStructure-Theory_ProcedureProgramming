@@ -263,6 +263,37 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 	// Fill your code
 	
 
+	/*====높이 계산====
+	1) 첫 번째 인덱스 ( [0] )가 NULL이면 단말노드임을 고려 --> 0번째 인덱스 NULL인지 아닌지가 중요
+	2) 각 인덱스마다 연결된 자식노드들의 갯수 계산  --> ROOT노드 인덱스 기준
+	3) 특정 배열의 동일한 인덱스에 갯수 저장 --> maxArr
+	4) maxArr에서 최대값 탐색 후 출력매개변수 tree_height을 통해 반환*/
+
+	nodeptr pcur = cur->links[0];//단말노드 탐색을 위한 장치 --> Lv 1이 이미 계산되었다고 가정
+	int maxArr[MAX_CHILD] = { 0 };
+	int idx = 0;//ROOT노드의 멤버 변수인 배열의 반복제어변수 -->이름을 "진용진"으로 갖는 노드의 links배열이 탐색 제어
+	int maxHeight = par_height;//maxArr의 최대 높이 원소
+
+	while (cur->links[idx] != NULL) {//포인터 배열의 원소가 NULL이면 루프 탈출
+		if (pcur == NULL) {//links 배열의 첫 번째 원소가 null 이면 단말노드
+			maxArr[idx] = par_height + 1; //갯수 + 1 --> ex) "진용진" 0번째 인덱스에서 단말노드까지 연결된 자식의 갯수 --> 3
+			idx++;//ROOT인덱스의 0번째 인덱스에서 1번째 인덱스 탐색을 위한 제어 변수 갱신
+			par_height = 0;//갯수 확인 변수 초기화
+			pcur = cur->links[idx];//단말노드 탐색 장치 초기화
+		}
+		else {//포인터 배열의 첫 번째 원소가 NULL이 아니면 단말노드가 아님 --> 갯수 증가
+			pcur = pcur->links[0];//탐색 노드 자식으로 이동
+			par_height++;
+		}
+	}//LOOP1_각 인덱스마다 높이 계산 후 maxArr 저장
+
+	for (int i = 0; i < MAX_CHILD; i++) {
+		maxHeight = maxArr[0];
+		if (maxArr[0] > maxHeight) maxHeight = maxArr[i];
+	}//LOOP2_최대 높이 탐색 
+
+	*tree_height = maxHeight;//출력매개변수로 값 반환
+
 }
 
 // Find the depth of a specific person
