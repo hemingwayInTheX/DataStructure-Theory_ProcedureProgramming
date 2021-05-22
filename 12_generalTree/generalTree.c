@@ -272,7 +272,7 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 	nodeptr pcur = cur->links[0];//단말노드 탐색을 위한 장치 --> Lv 1이 이미 계산되었다고 가정
 	int maxArr[MAX_CHILD] = { 0 };
 	int idx = 0;//ROOT노드의 멤버 변수인 배열의 반복제어변수 -->이름을 "진용진"으로 갖는 노드의 links배열이 탐색 제어
-	int maxHeight = par_height;//maxArr의 최대 높이 원소
+	int maxHeight = 0;//maxArr의 최대 높이 원소
 
 	while (cur->links[idx] != NULL) {//포인터 배열의 원소가 NULL이면 루프 탈출
 		if (pcur == NULL) {//links 배열의 첫 번째 원소가 null 이면 단말노드
@@ -302,8 +302,31 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 int calc_depth(nodeptr cur, int par_height, char* sname) {
 
 	// Fill your code
-	
+	nodeptr pcur = cur;//단말노드 탐색을 위한 장치 --> Lv 1이 이미 계산되었다고 가정
+	int idx = 0;//ROOT노드의 멤버 변수인 배열의 반복제어변수 -->이름을 "진용진"으로 갖는 노드의 links배열이 탐색 제어
+	int pidx = 0;
+	int result = 0;
+	int chkDepth = par_height;//찾고자하는 노드의 Lv
 
+	if (pcur == NULL) 
+		return;
+	
+	chkDepth++;
+	
+	if (strcmp(pcur->name, sname) == 0)
+		return chkDepth;
+	if (pcur->links[idx] == NULL) 
+		return 0;
+	else {
+		pcur = pcur->links[idx];
+		calc_depth(pcur, chkDepth, pcur->name);
+		pcur = pcur->links[++idx];
+		calc_depth(pcur, chkDepth, pcur->name);
+	}
+	if (chkDepth == 0) {
+		return 0;
+	}
+	else printf("Height of the node of %s : %d", sname, chkDepth);
 }
 
 // Find all ancestors of a specific person
