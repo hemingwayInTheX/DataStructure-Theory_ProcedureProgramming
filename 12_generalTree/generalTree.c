@@ -302,31 +302,27 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 int calc_depth(nodeptr cur, int par_height, char* sname) {
 
 	// Fill your code
-	nodeptr pcur = cur;//단말노드 탐색을 위한 장치 --> Lv 1이 이미 계산되었다고 가정
-	int idx = 0;//ROOT노드의 멤버 변수인 배열의 반복제어변수 -->이름을 "진용진"으로 갖는 노드의 links배열이 탐색 제어
-	int pidx = 0;
-	int result = 0;
-	int chkDepth = par_height;//찾고자하는 노드의 Lv
+	nodeptr pcur = cur;
+	int i = 0;
+	int cntDp = par_height;
 
-	if (pcur == NULL) 
-		return;
-	
-	chkDepth++;
-	
-	if (strcmp(pcur->name, sname) == 0)
-		return chkDepth;
-	if (pcur->links[idx] == NULL) 
-		return 0;
-	else {
-		pcur = pcur->links[idx];
-		calc_depth(pcur, chkDepth, pcur->name);
-		pcur = pcur->links[++idx];
-		calc_depth(pcur, chkDepth, pcur->name);
+	cntDp++;//check level
+	while (pcur->links[i] != NULL) {
+		if (pcur != NULL) {
+			if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
+				printf("Height of the node of %s : %d", pcur->name, cntDp);
+				return 1;
+			}
+			return calc_depth(pcur->links[i], cntDp, sname);
+		}
 	}
-	if (chkDepth == 0) {
-		return 0;
-	}
-	else printf("Height of the node of %s : %d", sname, chkDepth);
+	//if (pcur != NULL) {
+	//	if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
+	//		printf("Height of the node of %s : %d", pcur->name, cntDp);
+	//		return 1;
+	//	}
+	//	return calc_depth(pcur->links[i], cntDp, sname);
+	//}
 }
 
 // Find all ancestors of a specific person
