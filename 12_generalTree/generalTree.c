@@ -117,7 +117,7 @@ int main() {
 			else
 				printf("Such a person does not exist\n");
 		}
-		else if(strcmp(command, "dp") == 0) {
+	else if(strcmp(command, "dp") == 0) {
 			res = calc_depth(root, 0, name);
 			if(!res)
 				printf("Such a name does not exist in the tree\n");
@@ -302,28 +302,29 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 int calc_depth(nodeptr cur, int par_height, char* sname) {
 
 	// Fill your code
-	nodeptr pcur = cur;
-	int i = 0;
+	nodeptr pcur = NULL;
+	int idx = 1;
 	int cntDp = par_height;
 
-	cntDp++;//check level
-	while (pcur->links[i] != NULL) {
-		if (pcur != NULL) {
-			if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
-				printf("Height of the node of %s : %d", pcur->name, cntDp);
-				return 1;
-			}
-			return calc_depth(pcur->links[i], cntDp, sname);
-		}
+	if (cur->links[0] == NULL) {
+		return 0;
 	}
-	//if (pcur != NULL) {
-	//	if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
-	//		printf("Height of the node of %s : %d", pcur->name, cntDp);
-	//		return 1;
-	//	}
-	//	return calc_depth(pcur->links[i], cntDp, sname);
-	//}
+	else {
+		 calc_depth(cur->links[idx], cntDp, sname);
+		 pcur = cur->links[1];
+		 calc_depth(pcur, cntDp, sname);
+
+	}
 }
+	
+//	if (pcur->links[idx] != NULL) {
+//		if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
+//			printf("Height of the node of %s : %d", pcur->name, cntDp);
+//			return 1;
+//		}
+//		return calc_depth(pcur->links[idx], cntDp, sname);
+//	}
+
 
 // Find all ancestors of a specific person
 int find_ancestors(nodeptr cur, char* sname) {
