@@ -302,35 +302,39 @@ void calc_height(nodeptr cur, int par_height, int* tree_height) {
 int calc_depth(nodeptr cur, int par_height, char* sname) {
 
 	// Fill your code
-	nodeptr pcur = NULL;
-	int idx = 1;
+	
+	/*===종료조건===
+	1) 단말노드일 경우 --> 포인터 배열의 원소가 null 만나면
+	2) 이름 탐색 성공할 경우 --> 1 반환 및 종료
+	3) 탐색 실패할 경우 --> 자식노드로 이동 및 순회*/
+	
+	int idx = 0;
+	int cidx = 0;
 	int cntDp = par_height;
 
-	if (cur->links[0] == NULL) {
-		return 0;
+	if (cur == NULL) return ;//단말노드 만나면
+	if (strcmp(cur->name, sname) == 0) {//탐색 성공 시
+		printf("Height of the node of %s : %d", sname, par_height);
+		return 1;
 	}
-	else {
-		 calc_depth(cur->links[idx], cntDp, sname);
-		 pcur = cur->links[1];
-		 calc_depth(pcur, cntDp, sname);
+	else {//탐색 실패 시
+		if (root->links[idx] != NULL) {//자식노드 갱신
+			calc_depth(cur->links[idx], cntDp, sname);
+		}
+		else return 0;//전체 노드 순회했는데 입력한 이름이 자료구조에 없을 경우 0 반환
 
+		if (cur == root ){//단말 노드 만나고 다시 최상위 노드로 돌아왔을 때  최상위 노드의 포인터 배열 인덱스 증가시키고 작업 재수행
+			idx++;
+			calc_depth(cur->links[idx], cntDp, sname);
+		}
 	}
 }
-	
-//	if (pcur->links[idx] != NULL) {
-//		if (strcmp(pcur->name, sname) == 0) {//이름 찾으면
-//			printf("Height of the node of %s : %d", pcur->name, cntDp);
-//			return 1;
-//		}
-//		return calc_depth(pcur->links[idx], cntDp, sname);
-//	}
-
 
 // Find all ancestors of a specific person
 int find_ancestors(nodeptr cur, char* sname) {
 
 	// Fill your code
-	
+		
 
 }
 
