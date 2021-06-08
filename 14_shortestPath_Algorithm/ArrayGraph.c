@@ -122,15 +122,14 @@ void dijkstra(Graph* G, int v) {
 		}
 	}/*LOOP_1*/
 	for (int i = 0; G->S[i+1]!=G->n; i++){//모든 정점에 대한 relaxation 과정을 완료할 때까지 루프 진행
-		u = nextVertex(G);
-		G->S[i] = u;
+		u = nextVertex(G);//dist에서 최소비용이 가장 작은 정점을 선택
+		G->S[i] = u;//집합 S에 추가 --> 정점을 추가함으로써 해당 정점을 지나칠 경우 최소비용이 갱신되는지 확인
 		for (int w = 0; w < G->n ; w++){
 			if (G->S[i + 1] != w && G->dist[u] + G->cost[u][w]) {
 				G->dist[w] = G->dist[u] + G->cost[u][w];
 				G->pred[w] = u;
 			}
 		}
-
 	}/*LOOP_2*/
 }
 
@@ -138,11 +137,26 @@ void dijkstra(Graph* G, int v) {
 int bellmanFord(Graph* G, int v) {
 
 	// Fill your code
-	//for (int i = 0; i < G->n-1; i++){//시작정점을 제외한 그래프 G의 정점 개수만큼 모든 간선에 대한 relaxation 작업 수행
-	//	for (int i = 0; i < length; i++){
-	//		if(G->dist[v]>dist)
-	//	}
-	//}
+	
+	/*===벨만포드===
+	1) 음수 가중치 허용, 음수 사이클 확인 가능
+	2) relaxation = 총 정점의 개수에서 -1만큼 모든 정점 확인
+	3) 정점의 개수와 동일한 횟수에서도 최단 경로값이 갱신된다면
+	해당 그래프는 음수 사이클을 지니고 있음*/
+	int numOfGraph = G->n;//현재 그래프에 삽입된 노드의 개수
+	int u = 0;
+	for (int i = 0; i < numOfGraph; i++) {//모든 정점에 대한 최소 비용을 무한대로 초기화
+		G->dist[i] = INF;
+	}
+	G->dist[v] = 0;//시작 정점은 0으로 초기화
+
+	for (int i = 0; i < numOfGraph - 1; i++) {//정점의 개수보다 1적은 만큼 루프 수행
+		for () {
+			if (G->dist[v] > G->dist[u] + G->cost[u][v]) {//relaxation 결과가 기존의 경로보다 저렴하면 해당 결과값으로 갱신
+				G->dist[v] = G->dist[u] + G->cost[u][v];
+			}
+		}
+	}
 
 }	
 
